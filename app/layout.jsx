@@ -1,5 +1,12 @@
 import { Poppins } from "next/font/google";
 import "./globals.css";
+import AuthProvider from "@/components/AuthProvider";
+import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { GlobalProvider } from "@/context/GlobalContext";
+import "photoswipe/dist/photoswipe.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -15,10 +22,17 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${poppins.variable} h-full antialiased`}>
-      <body className="min-h-full flex flex-col" suppressHydrationWarning>
-        {children}
-      </body>
-    </html>
+    <AuthProvider>
+      <GlobalProvider>
+        <html lang="en" className={`${poppins.variable} h-full antialiased`}>
+          <body className="min-h-full flex flex-col" suppressHydrationWarning>
+            <Navbar />
+            <main>{children}</main>
+            <Footer />
+            <ToastContainer />
+          </body>
+        </html>
+      </GlobalProvider>
+    </AuthProvider>
   );
 }
